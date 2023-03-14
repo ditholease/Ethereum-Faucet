@@ -41,7 +41,6 @@
         <p>You can withdraw RoxyCoin from this Faucet. Make sure to connect your wallet and switch to the RoxyCoin Blockchain.</p>
         <p>
             <a class="btn btn-lg btn-primary" role="button" onclick="requestEther()">Request Ether</a>
-            <a class="btn btn-lg btn-success" role="button" onclick="donateEther()">Donate Ether</a>
         </p>
     </div>
 
@@ -52,12 +51,8 @@
     </div>
 </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.1/dist/web3.min.js" crossorigin="anonymous"></script>
-
     <script>
-        const contract_address = '0x8a6868DeC83790637C986B90B045472E7B140aa6'
+        const contract_address = '0xB6AbFC8BE79Fc489e83E64F304Ce679E17D26f21'
         const contract_abi = [
             {
                 "anonymous": false,
@@ -145,26 +140,6 @@
                 });
                 resolve();
             });
-        }
-        function donateEther(){
-            var amount = prompt("How much RoxyCoin do you want to donate?", "0.5");
-            if(isNaN(parseInt(amount))){
-                document.getElementById("tx_result").innerHTML = "Error: Please input a valid number";
-            }else{
-                new Promise((resolve) => {
-                    getAccounts(function (result) {
-                        web3.eth.sendTransaction(
-                            {
-                                from: result[0],
-                                to: contract_address,
-                                value: web3.utils.toWei(amount, 'ether')
-                            }, function(err, transactionHash) {
-                                if (!err)
-                                    document.getElementById("tx_result").innerHTML = "TX created successfully with the hash: " + transactionHash;
-                            });
-                    });
-                });
-            }
         }
 
         function getAccounts(callback) {
